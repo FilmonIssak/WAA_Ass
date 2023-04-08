@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepo extends JpaRepository<User, Long> {
+public interface UserRepo extends CrudRepository<User, Long> {
     @Query("select p from User p where count(p.posts)>=:n")
     public List<User> findUserByPostsGreaterThan(int n);
 

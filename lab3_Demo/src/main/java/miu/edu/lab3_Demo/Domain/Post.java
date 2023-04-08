@@ -1,6 +1,7 @@
 package miu.edu.lab3_Demo.Domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,13 +16,14 @@ import java.util.List;
 public class Post {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
     private String content;
     private String author;
 
-     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+     @OneToMany(mappedBy ="posts" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+     @JsonBackReference
      @JoinColumn(name = "comments")
      private List<Comment> comments;
 

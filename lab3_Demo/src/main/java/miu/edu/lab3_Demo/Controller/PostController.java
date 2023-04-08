@@ -30,9 +30,9 @@ public class PostController {
         postService.delete(id);
     }
 
-    @PostMapping("/{userId}")
-    public void save(@RequestBody PostDto post, @PathVariable Long userId){
-        postService.save(post, userId);
+    @PostMapping
+    public void save(@RequestBody Post post){
+        postService.save(post);
     }
 
     @GetMapping("/title/{title}")
