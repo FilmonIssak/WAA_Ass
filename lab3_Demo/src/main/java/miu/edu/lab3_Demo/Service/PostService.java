@@ -10,8 +10,8 @@ public interface PostService  {
 
     List<Post> getAll();
     Post getById(long id);
-    public void save(Post poso);
-//    void saveDto(Post postDto);
+    public void save(PostDto postDto, Long userId);
+    void saveDto(PostDto postDto);
 
     void delete(long id);
 

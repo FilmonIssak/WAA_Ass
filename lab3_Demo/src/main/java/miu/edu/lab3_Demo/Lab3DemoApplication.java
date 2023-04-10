@@ -5,11 +5,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import javax.swing.*;
+
 @SpringBootApplication
-public class Lab4DemoApplication {
+public class Lab3DemoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Lab4DemoApplication.class, args);
+		SpringApplication.run(Lab3DemoApplication.class, args);
 	}
 
 	@Bean

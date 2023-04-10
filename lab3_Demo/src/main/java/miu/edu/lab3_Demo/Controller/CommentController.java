@@ -2,6 +2,7 @@ package miu.edu.lab3_Demo.Controller;
 
 
 import miu.edu.lab3_Demo.Dto.CommentDto;
+import miu.edu.lab3_Demo.Dto.PostDto;
 import miu.edu.lab3_Demo.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

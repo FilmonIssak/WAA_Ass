@@ -42,21 +42,27 @@ public class PostServiceImpl implements PostService {
     public Post getById(long id) {
         var post = postRepo.findById(id).orElseThrow(IllegalArgumentException::new);
         var c = commentRepo.findById(id);
+        post.addCommentToPost(c.get());
         return post;
     }
 
     @Override
-    public void save(Post post) {
+    public void save(PostDto postDto, Long userId) {
+        var user = userRepo.findById(userId);
 
+        Post post= modelMapper.map(postDto,Post.class);
+        if (user.isPresent()) user.get().addPostToUser(post);
+        System.out.println("--------"+user.get());
+        userRepo.save(user.get());
         postRepo.save(post);
     }
 
-//    @Override
-//    public void saveDto(PostDto postDto) {
-//       Post post= modelMapper.map(postDto,Post.class);
-//       postRepo.save(post);
-//        System.out.println(post);
-//    }
+    @Override
+    public void saveDto(PostDto postDto) {
+       Post post= modelMapper.map(postDto,Post.class);
+       postRepo.save(post);
+        System.out.println(post);
+    }
 
     @Override
     public void delete(long id) {

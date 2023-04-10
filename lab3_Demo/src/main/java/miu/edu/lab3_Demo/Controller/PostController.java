@@ -1,6 +1,7 @@
 package miu.edu.lab3_Demo.Controller;
 
 import miu.edu.lab3_Demo.Domain.Post;
+import miu.edu.lab3_Demo.Dto.PostDto;
 import miu.edu.lab3_Demo.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +30,9 @@ public class PostController {
         postService.delete(id);
     }
 
-    @PostMapping
-    public void save(@RequestBody Post post){
-        postService.save(post);
+    @PostMapping("/{userId}")
+    public void save(@RequestBody PostDto post, @PathVariable Long userId){
+        postService.save(post, userId);
     }
 
     @GetMapping("/title/{title}")

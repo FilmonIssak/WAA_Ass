@@ -6,7 +6,6 @@ import miu.edu.lab3_Demo.Repo.CommentRepo;
 import miu.edu.lab3_Demo.Service.CommentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +22,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDto> getAll() {
+
         List<Comment> comment = (List<Comment>) commentRepo.findAll();
+        CommentDto cD = new CommentDto();
         var com = comment.stream().map(p->modelMapper.map(p,CommentDto.class)).toList();
         return com;
     }
@@ -32,7 +33,6 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto getById(long id) {
         var comment = commentRepo.findById(id);
         CommentDto cD = new CommentDto();
-//        var d = comment.map(o->modelMapper.map(o, CommentDto.class));
         comment.ifPresent(value -> cD.setName(value.getName()));
         return cD;
     }
@@ -40,6 +40,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void save(CommentDto commentDto) {
         Comment comment= modelMapper.map(commentDto,Comment.class);
+
         commentRepo.save(comment);
         System.out.println(comment);
     }
@@ -51,6 +52,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void update(long id, CommentDto commentDto) {
+
         Comment comment = commentRepo.findById(id).orElseThrow();
         comment.setName(commentDto.getName());
         commentRepo.save(comment);

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -37,15 +38,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepo.findAll();
+
+        List<User> users = userRepo.findAll();
+
+        for (User user: users){
+            List<Post> posts = (List<Post>) postRepo.findAll();
+            for (Post post: posts){
+                Iterable<Comment> comments =  commentRepo.findAll();
+                post.setComments((List<Comment>) comments);
+            }
+            user.setPosts(posts);
+        }
+        return users;
     }
 
 
 
     @Override
     public User getUserById(long id) {
-        return userRepo.findById(id).get();
 
+        var us = userRepo.findById(id).orElseThrow(IllegalArgumentException::new);
+        var po = postRepo.findById(id).orElseThrow(IllegalArgumentException::new);
+        var co = commentRepo.findById(id).orElseThrow(IllegalArgumentException::new);
+        po.addCommentToPost(co);
+        us.addPostToUser(po);
+        return us;
     }
 
     @Override
@@ -65,6 +82,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(long id) {
+        postRepo.deleteById(id);
         userRepo.deleteById(id);
     }
 
