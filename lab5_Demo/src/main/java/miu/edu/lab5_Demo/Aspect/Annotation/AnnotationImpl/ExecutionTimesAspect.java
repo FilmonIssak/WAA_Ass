@@ -1,4 +1,4 @@
-package miu.edu.lab4_Demo.aspect;
+package miu.edu.lab5_Demo.Aspect.Annotation.AnnotationImpl;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ExecutionTimesAspect {
-    @Pointcut("@annotation(miu.edu.lab4_Demo.aspect.annotation.ExecutionTime)")
+    @Pointcut("@annotation(miu.edu.lab5_Demo.Aspect.Annotation.ExecutionTime)")
     public void excutionTimeAnnotation(){
 
     }

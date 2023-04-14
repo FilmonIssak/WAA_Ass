@@ -1,8 +1,8 @@
-package miu.edu.lab4_Demo.aspect;
+package miu.edu.lab5_Demo.Aspect.Annotation.AnnotationImpl;
 
 
-import miu.edu.lab4_Demo.Domain.Logger;
-import miu.edu.lab4_Demo.Service.LoggerService;
+import miu.edu.lab5_Demo.Domain.Logger;
+import miu.edu.lab5_Demo.Service.LoggerService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.time.ZoneId;
 
@@ -20,9 +20,9 @@ import java.time.ZoneId;
 public class LoggerAspect {
     @Autowired
     private LoggerService loggerService;
-//    private java.util.logging.Logger logger= java.util.logging.Logger.getLogger(LoggerAspect.class.getName());
+    private java.util.logging.Logger logger= java.util.logging.Logger.getLogger(LoggerAspect.class.getName());
 
-    @Around("execution(* * .controller.*.*(..))")
+    @Around("execution(* *.controller.*.*(..))")
     public Object around(ProceedingJoinPoint joinPoint){
         Object result=null;
         long beginTime= System.currentTimeMillis();

@@ -1,7 +1,6 @@
-package miu.edu.lab4_Demo.Repo;
+package miu.edu.lab5_Demo.Repo;
 
-
-import miu.edu.lab4_Demo.Domain.Logger;
+import miu.edu.lab5_Demo.Domain.Logger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
