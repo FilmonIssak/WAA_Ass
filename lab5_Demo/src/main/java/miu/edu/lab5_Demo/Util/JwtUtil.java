@@ -17,7 +17,7 @@ public class JwtUtil {
     UserDetailsService userDetailsService;
     private final String secret = "top-secret";
     private final long expiration = 5 * 60 * 60 * 60;
-    //     private final long expiration = 5;
+
     private final long refreshExpiration = 5 * 60 * 60 * 60 * 60;
 
     // this wil extract a claim from a token, its used in the methods above to get the username and date
@@ -100,15 +100,8 @@ public class JwtUtil {
                     .setSigningKey(secret)
                     .parseClaimsJws(token);
             return true;
-        } catch (SignatureException e) {
-            System.out.println(e.getMessage());
-        } catch (MalformedJwtException e) {
-            System.out.println(e.getMessage());
-        } catch (ExpiredJwtException e) {
-            System.out.println(e.getMessage());
-        } catch (UnsupportedJwtException e) {
-            System.out.println(e.getMessage());
-        } catch (IllegalArgumentException e) {
+        } catch (SignatureException | MalformedJwtException | ExpiredJwtException |
+                 UnsupportedJwtException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
         return false;
@@ -120,7 +113,8 @@ public class JwtUtil {
 
     public String doGenerateRefreshToken(Map<String, Object> claims, String subject) {
 
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+        return Jwts.builder().setClaims(claims).setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
