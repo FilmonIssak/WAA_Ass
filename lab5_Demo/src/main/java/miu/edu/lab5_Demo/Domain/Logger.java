@@ -1,15 +1,15 @@
 package miu.edu.lab5_Demo.Domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Setter
+@Getter
 @Entity
 public class Logger {
     @Id

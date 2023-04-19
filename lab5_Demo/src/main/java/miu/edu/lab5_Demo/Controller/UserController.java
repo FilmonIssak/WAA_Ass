@@ -2,8 +2,11 @@ package miu.edu.lab5_Demo.Controller;
 
 import miu.edu.lab5_Demo.Domain.User;
 import miu.edu.lab5_Demo.Dto.UserDto;
+import miu.edu.lab5_Demo.Dto.response.LoginResponse;
 import miu.edu.lab5_Demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,19 +15,30 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    @Autowired
     UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @GetMapping
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    public ResponseEntity<?> getAllUsers(){
+        var users = userService.getAllUsers();
+        if(users.isEmpty()) {
+            return new ResponseEntity<>("Users Not Found",HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id){
-        return userService.getUserById(id);
+    public ResponseEntity<?> getUserById(@PathVariable int id){
+        var user = userService.getUserById(id);
+//        return userService.getUserById(id);
+        if(user == null) {
+            return new ResponseEntity<>("User Not Found",HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -39,17 +53,26 @@ public class UserController {
 
     @PostMapping
     public @ResponseBody void addNewUser(User user) {
+
         userService.saveUser(user);
     }
 
     @GetMapping("/title{title}")
-    public List<User> getUserTitle(@PathVariable String title) {
-        return (List<User>) userService.findUserTitle(title);
+    public ResponseEntity<?> getUserTitle(@PathVariable String title) {
+        var userTitle = userService.findUserTitle(title);
+        if(userTitle.isEmpty()) {
+            return new ResponseEntity<>("User with title Not Found",HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(userTitle,HttpStatus.OK);
     }
 
     @GetMapping("/userPost{n}")
-    public List<User> getUserHaveMoreThanOnePost(@PathVariable int n) {
-        return userService.findUserHaveMoreThanOnePost(n);
+    public ResponseEntity<?> getUserHaveMoreThanOnePost(@PathVariable int n) {
+        var userPost = userService.findUserHaveMoreThanOnePost(n);
+        if(userPost.isEmpty()) {
+            return new ResponseEntity<>("User with moreThan one Post Not Found",HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(userPost, HttpStatus.OK);
     }
 
 }
